@@ -15,13 +15,13 @@ target_angle = 60 # °
 
 # Define shot properties
 shot_speed = 200 # m/s
-shot_delay = int(input("Combien de temps attendez-vous avant de tirer ? (en secondes) : "))
-shot_distance = int(input("A quelle distance du point de lancer tirez-vous ? (en mètres) : "))
-shot_height = int(input("Quelle taille faites-vous ? (en centimètres) : "))
-shot_angle = int(input("Quel ange de tir utilisez-vous par rapport au sol ? (en degrés) : "))
+shot_delay = int(input("How long do you wait before shooting? (in seconds)"))
+shot_distance = int(input("At what distance from the throwing point do you shoot? (in meters) : "))
+shot_height = int(input("What size are you? (in centimeters) : "))
+shot_angle = int(input("What shooting angle do you use in relation to the ground? (in degrees) : "))
 
 # Number of decimals considered during the check.
-precision = int(input("Quelle degrès de précision voulez-vous ? : (1-5, le plus grand est le plus dur) : "))
+precision = int(input("What degree of precision do you want? (1-5, where the highest is the hardest) : "))
 
 gravity = 9.81 # n
 
@@ -77,22 +77,22 @@ frm.grid()
 # Calculate if the shot hit the target
 if x_time >= 0 : # they hit eachother on x axis
     if y_delta < 0 :
-        ttk.Label(frm, text="Dommage... Essayez encore!").grid(column=0, row=0)
+        ttk.Label(frm, text="Too bad... Try again!").grid(column=0, row=0)
 
     elif  y_delta == 0 :
         if round(x_time, precision) == round((-B + math.sqrt(y_delta)) / (2 * A), precision) : 
-            ttk.Label(frm, text="Bien joué, en plein dans le mille!").grid(column=0, row=0)
+            ttk.Label(frm, text="Nicely done, right on target!").grid(column=0, row=0)
         else :
-            ttk.Label(frm, text="Dommage... Essayez encore!").grid(column=0, row=0)
+            ttk.Label(frm, text="Too bad... Try again!").grid(column=0, row=0)
     
     else : 
         if round(x_time, precision) == round((-B + math.sqrt(y_delta)) / (2 * A), precision) or round(x_time, precision) == round((-B - math.sqrt(y_delta)) / (2 * A), precision) :
-            ttk.Label(frm, text="Bien joué, en plein dans le mille!").grid(column=0, row=0)
+            ttk.Label(frm, text="Nicely done, right on target!").grid(column=0, row=0)
         else :
-            ttk.Label(frm, text="Dommage... Essayez encore!").grid(column=0, row=0)
-            
+            ttk.Label(frm, text="Too bad... Try again!").grid(column=0, row=0)
+
 else :
-    ttk.Label(frm, text="Dommage... Essayez encore!").grid(column=0, row=0)
+    ttk.Label(frm, text="Too bad... Try again!").grid(column=0, row=0)
 
 
 # Run the simulation

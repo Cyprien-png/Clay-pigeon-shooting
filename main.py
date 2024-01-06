@@ -6,19 +6,25 @@ from tkinter import ttk
 from matplotlib.animation import FuncAnimation
 
 
+class Projectile :
+    def __init__(self, speed, delay, distance, height, angle):
+        self.speed = speed # m/s
+        self.delay = delay # s
+        self.distance = distance # m
+        self.height = height # m
+        self.angle = angle # °
+
+
 # Define target properties
-target_speed = 20 # m/s
-target_delay = 0 # s
-target_distance = 0 # m
-target_height = 0 # m
-target_angle = 60 # °
+target = Projectile(20, 0, 0, 0, 60)
 
 # Define shot properties
-shot_speed = 200 # m/s
 shot_delay = int(input("How long do you wait before shooting? (in seconds) : "))
 shot_distance = int(input("At what distance from the throwing point do you shoot? (in meters) : "))
 shot_height = int(input("What size are you? (in centimeters) : "))
 shot_angle = int(input("What shooting angle do you use in relation to the ground? (in degrees) : "))
+
+shot = Projectile(200, shot_delay, shot_distance, shot_height, shot_angle)
 
 # Number of decimals considered during the check.
 precision = int(input("What degree of precision do you want? (1-5, where the highest is the hardest) : "))
@@ -26,16 +32,16 @@ precision = int(input("What degree of precision do you want? (1-5, where the hig
 gravity = 9.81 # n
 
 # Convert cm to m
-shot_height = shot_height/100
+shot.height = shot.height/100
 
 
 # Calculate the time before both function cross eachother on the axes
-x_time = (shot_distance - shot_speed * np.cos(np.radians(shot_angle)) * shot_delay - target_distance + target_speed * np.cos(np.radians(target_angle)) * target_delay) / (target_speed * np.cos(np.radians(target_angle)) - shot_speed * np.cos(np.radians(shot_angle)))
+x_time = (shot.distance - shot.speed * np.cos(np.radians(shot.angle)) * shot.delay - target.distance + target.speed * np.cos(np.radians(target.angle)) * target.delay) / (target.speed * np.cos(np.radians(target.angle)) - shot.speed * np.cos(np.radians(shot.angle)))
 
 # Calculate delta
 A = (-0.5 * gravity)
-B = (target_speed * np.sin(np.radians(target_angle)) + gravity * target_delay - shot_speed * np.sin(np.radians(shot_angle)))
-C = (target_height - shot_height - (target_speed * np.sin(np.radians(target_angle)) * target_delay) - (0.5 * gravity * (target_delay ** 2)) + (shot_speed * np.sin(np.radians(shot_angle)) * shot_delay))
+B = (target.speed * np.sin(np.radians(target.angle)) + gravity * target.delay - shot.speed * np.sin(np.radians(shot.angle)))
+C = (target.height - shot.height - (target.speed * np.sin(np.radians(target.angle)) * target.delay) - (0.5 * gravity * (target.delay ** 2)) + (shot.speed * np.sin(np.radians(shot.angle)) * shot.delay))
 
 y_delta = B ** 2 - 4 * A * C
 
@@ -43,11 +49,11 @@ y_delta = B ** 2 - 4 * A * C
 time = np.linspace(0, 4, 1000)  # Time array for the animation
 
 # Calculate x and y positions for target and shot
-x_target = target_distance + target_speed * np.cos(np.radians(target_angle)) * (time - target_delay)
-y_target = target_height + target_speed * np.sin(np.radians(target_angle)) * (time - target_delay) - 0.5 * gravity * (time - target_delay) ** 2
+x_target = target.distance + target.speed * np.cos(np.radians(target.angle)) * (time - target.delay)
+y_target = target.height + target.speed * np.sin(np.radians(target.angle)) * (time - target.delay) - 0.5 * gravity * (time - target.delay) ** 2
 
-x_shot = shot_distance + shot_speed * np.cos(np.radians(shot_angle)) * (time - shot_delay)
-y_shot = shot_height + shot_speed * np.sin(np.radians(shot_angle)) * (time - shot_delay) 
+x_shot = shot.distance + shot.speed * np.cos(np.radians(shot.angle)) * (time - shot.delay)
+y_shot = shot.height + shot.speed * np.sin(np.radians(shot.angle)) * (time - shot.delay) 
 
 
 # Initialize the plot on the simu

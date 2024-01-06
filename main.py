@@ -11,7 +11,7 @@ class Projectile :
         self.speed = speed # m/s
         self.delay = delay # s
         self.distance = distance # m
-        self.height = height # m
+        self.height = height/100 # convert cm to m
         self.angle = angle # °
 
 
@@ -30,9 +30,6 @@ shot = Projectile(200, shot_delay, shot_distance, shot_height, shot_angle)
 precision = int(input("What degree of precision do you want? (1-5, where the highest is the hardest) : "))
 
 gravity = 9.81 # n
-
-# Convert cm to m
-shot.height = shot.height/100
 
 
 # Calculate the time before both function cross eachother on the axes

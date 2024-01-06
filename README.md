@@ -1,6 +1,6 @@
 # About
 This repo is a small python "clay pigeon shooting" simulation project. 
-It was created as part of an interdisciplinary project involving mathematics, physics and computer science.
+It was created as part of an interdisciplinary project involving mathematics, physics, business management, english and computer science.
 
 ## Cheat sheet
 * Delay : 2 

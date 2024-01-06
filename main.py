@@ -15,7 +15,7 @@ target_angle = 60 # °
 
 # Define shot properties
 shot_speed = 200 # m/s
-shot_delay = int(input("How long do you wait before shooting? (in seconds)"))
+shot_delay = int(input("How long do you wait before shooting? (in seconds) : "))
 shot_distance = int(input("At what distance from the throwing point do you shoot? (in meters) : "))
 shot_height = int(input("What size are you? (in centimeters) : "))
 shot_angle = int(input("What shooting angle do you use in relation to the ground? (in degrees) : "))

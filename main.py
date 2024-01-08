@@ -60,6 +60,10 @@ ax.set_ylim(0, 20)
 target, = ax.plot([], [], linestyle='-', marker='', label='Target')  # Connect points with lines
 shot, = ax.plot([], [], linestyle='-', marker='', label='Shot')
 
+fig.canvas.manager.set_window_title('Clay pigeon shooting')
+
+
+
 # Update function for animation
 def update(frame):
     target.set_data(x_target[:frame], y_target[:frame])

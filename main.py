@@ -70,37 +70,21 @@ def update(frame):
 # Set up the animation
 ani = FuncAnimation(fig, update, frames=len(time), blit=True, interval=1/10)
 
-
-# Congrat the player
-root = Tk()
-root.title('Projectile Motion')
-frm = ttk.Frame(root, padding=20)
-frm.grid()
+result_message = "Too bad... Try again!"
 
 # Calculate if the shot hit the target
 if x_time >= 0 : # they hit eachother on x axis
-    if y_delta < 0 :
-        ttk.Label(frm, text="Too bad... Try again!").grid(column=0, row=0)
-
-    elif  y_delta == 0 :
+    if  y_delta == 0 :
         if round(x_time, precision) == round((-B + math.sqrt(y_delta)) / (2 * A), precision) : 
-            ttk.Label(frm, text="Nicely done, right on target!").grid(column=0, row=0)
-        else :
-            ttk.Label(frm, text="Too bad... Try again!").grid(column=0, row=0)
-    
-    else : 
+            result_message = "Nicely done, right on target!"
+      
+    elif  y_delta > 0 : 
         if round(x_time, precision) == round((-B + math.sqrt(y_delta)) / (2 * A), precision) or round(x_time, precision) == round((-B - math.sqrt(y_delta)) / (2 * A), precision) :
-            ttk.Label(frm, text="Nicely done, right on target!").grid(column=0, row=0)
-        else :
-            ttk.Label(frm, text="Too bad... Try again!").grid(column=0, row=0)
-
-else :
-    ttk.Label(frm, text="Too bad... Try again!").grid(column=0, row=0)
-
+            result_message = "Nicely done, right on target!"
 
 # Run the simulation
 plt.legend()
 plt.xlabel('Distance (m)')
 plt.ylabel('Height (m)')
-plt.title('Projectile Motion')
+plt.title(result_message)
 plt.show()

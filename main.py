@@ -27,10 +27,10 @@ shot_angle = int(input("What shooting angle do you use in relation to the ground
 shot = Projectile(200, shot_delay, shot_distance, shot_height, shot_angle)
 
 # Number of decimals considered during the check.
-precision = int(input("What degree of precision do you want? (1-5, where the highest is the hardest) : "))
+precision = int(input("What degree of precision do you want (1-5)? (where the highest is the hardest) : "))
+slow_motion = input("Would you like to see the simulation in slow motion (yes/no)? (default : no) : ")
 
 gravity = 9.81 # n
-
 
 # Calculate the time before both function cross eachother on the axes
 x_time = (shot.distance - shot.speed * np.cos(np.radians(shot.angle)) * shot.delay - target.distance + target.speed * np.cos(np.radians(target.angle)) * target.delay) / (target.speed * np.cos(np.radians(target.angle)) - shot.speed * np.cos(np.radians(shot.angle)))
@@ -42,8 +42,11 @@ C = (target.height - shot.height - (target.speed * np.sin(np.radians(target.angl
 
 y_delta = B ** 2 - 4 * A * C
 
-
-time = np.linspace(0, 4, 1000)  # Time array for the animation
+# Time array for the animation
+if slow_motion.lower() == "yes" or slow_motion.lower() == "y" :
+    time = np.linspace(0, 4, 4000)  
+else :
+    time = np.linspace(0, 4, 1000)
 
 # Calculate x and y positions for target and shot
 x_target = target.distance + target.speed * np.cos(np.radians(target.angle)) * (time - target.delay)

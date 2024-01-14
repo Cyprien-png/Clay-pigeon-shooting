@@ -16,19 +16,27 @@ class Projectile :
 
 
 # Define target properties
-target = Projectile(20, 0, 0, 0, 60)
+target_option = input("Would you like to custom the target throw (yes/no)? (default : no) : ")
+if target_option.lower() == "yes" or target_option.lower() == "y" :
+    target_angle = float(input("\t What throwing angle do you use in relation to the ground? (in degrees) : "))
+    target = Projectile(20, 0, 0, 0, target_angle)
+else :
+    target = Projectile(20, 0, 0, 0, 60)
+
 
 # Define shot properties
-shot_delay = int(input("How long do you wait before shooting? (in seconds) : "))
-shot_distance = int(input("At what distance from the throwing point do you shoot? (in meters) : "))
-shot_height = int(input("What size are you? (in centimeters) : "))
-shot_angle = int(input("What shooting angle do you use in relation to the ground? (in degrees) : "))
+print("\nWhat about the shot : ")
+shot_delay = float(input("\t How long do you wait before shooting? (in seconds) : "))
+shot_distance = float(input("\t At what distance from the throwing point do you shoot? (in meters) : "))
+shot_height = float(input("\t What size are you? (in centimeters) : "))
+shot_angle = float(input("\t What shooting angle do you use in relation to the ground? (in degrees) : "))
 
 shot = Projectile(200, shot_delay, shot_distance, shot_height, shot_angle)
 
 # Number of decimals considered during the check.
-precision = int(input("What degree of precision do you want (1-5)? (where the highest is the hardest) : "))
-slow_motion = input("Would you like to see the simulation in slow motion (yes/no)? (default : no) : ")
+precision = int(input("\t What level of precision do you want (1-5)? (where the highest is the hardest) : "))
+
+slow_motion = input("\nWould you like to see the simulation in slow motion (yes/no)? (default : no) : ")
 
 gravity = 9.81 # n
 
@@ -44,7 +52,7 @@ y_delta = B ** 2 - 4 * A * C
 
 # Time array for the animation
 if slow_motion.lower() == "yes" or slow_motion.lower() == "y" :
-    time = np.linspace(0, 4, 4000)  
+    time = np.linspace(0, 4, 6000)
 else :
     time = np.linspace(0, 4, 1000)
 
@@ -56,10 +64,54 @@ x_shot = shot.distance + shot.speed * np.cos(np.radians(shot.angle)) * (time - s
 y_shot = shot.height + shot.speed * np.sin(np.radians(shot.angle)) * (time - shot.delay) 
 
 
+
+
+def calculer_y_target(x_target, target, gravity):
+    t = (x_target - target.distance) / (target.speed * np.cos(np.radians(target.angle))) + target.delay
+    
+    y_target = (
+        target.height
+        + target.speed * np.sin(np.radians(target.angle)) * (t - target.delay)
+        - 0.5 * gravity * (t - target.delay) ** 2
+    )
+    
+    return y_target
+
+
+(target.speed * np.cos(np.radians(target.angle)) + target.distance)
+
+def test(target, gravity):
+    # Coefficients for the quadratic equation
+    A = -0.5 * gravity
+    B = target.speed * np.sin(np.radians(target.angle))
+    C = target.height
+
+    # Calculate the discriminant
+    Ddelta = B**2 - 4 * A * C
+
+    if Ddelta < 0:
+        print("The target never hits the ground.")
+    else:
+        # Calculate the time when the target hits the ground
+        t1 = (-B + math.sqrt(Ddelta)) / (2 * A)
+        t2 = (-B - math.sqrt(Ddelta)) / (2 * A)
+
+        # Choose the positive solution
+        t = max(t1, t2)
+
+        # Calculate the x position when the target hits the ground
+        return target.distance + target.speed * np.cos(np.radians(target.angle)) * max(t1, t2)
+    
+
+def getMaxHeigth(target, gravity):
+    return ((target.speed * np.sin(np.radians(target.angle))) ** 2)/(2 * gravity)
+
+
+
 # Initialize the plot on the simu
 fig, ax = plt.subplots()
-ax.set_xlim(0, 40)
-ax.set_ylim(0, 20)
+ax.set_xlim(0, test(target, gravity))
+ax.set_ylim(0, getMaxHeigth(target, gravity) + getMaxHeigth(target, gravity)/20)
 target, = ax.plot([], [], linestyle='-', marker='', label='Target')  # Connect points with lines
 shot, = ax.plot([], [], linestyle='-', marker='', label='Shot')
 
@@ -86,6 +138,12 @@ if x_time >= 0 : # they hit eachother on x axis
             result_message = "Nicely done, right on target!"
       
     elif  y_delta > 0 : 
+
+        print(x_time)
+        print("-------------------")
+        print((-B + math.sqrt(y_delta)) / (2 * A))
+        print((-B - math.sqrt(y_delta)) / (2 * A))
+
         if round(x_time, precision) == round((-B + math.sqrt(y_delta)) / (2 * A), precision) or round(x_time, precision) == round((-B - math.sqrt(y_delta)) / (2 * A), precision) :
             result_message = "Nicely done, right on target!"
 

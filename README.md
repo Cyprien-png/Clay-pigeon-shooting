@@ -4,7 +4,7 @@ It was created as part of an interdisciplinary project involving mathematics, ph
 
 ## Cheat sheet
 * Delay : 2 
-* distance : 0 
+* Distance : 0 
 * Height : 177
 * Angle : 30
 * Precision : 1
@@ -12,7 +12,7 @@ It was created as part of an interdisciplinary project involving mathematics, ph
 or
 
 * Delay : 1
-* distance : 9
+* Distance : 9
 * Height : 1000
 * Angle : 60
 * Precision : 2

@@ -139,7 +139,7 @@ if x_time >= 0 : # they hit eachother on x axis
       
     elif  y_delta > 0 : 
 
-        print(x_time)
+        print("\n\n\n", x_time)
         print("-------------------")
         print((-B + math.sqrt(y_delta)) / (2 * A))
         print((-B - math.sqrt(y_delta)) / (2 * A))

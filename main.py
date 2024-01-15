@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import math
-from tkinter import *
-from tkinter import ttk
 from matplotlib.animation import FuncAnimation
 
 

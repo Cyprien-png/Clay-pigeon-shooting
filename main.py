@@ -78,7 +78,7 @@ def calculer_y_target(x_target, target, gravity):
 
 (target.speed * np.cos(np.radians(target.angle)) + target.distance)
 
-def test(target, gravity):
+def getFallingDistance(target, gravity):
     # Coefficients for the quadratic equation
     A = -0.5 * gravity
     B = target.speed * np.sin(np.radians(target.angle))
@@ -108,7 +108,7 @@ def getMaxHeigth(target, gravity):
 
 # Initialize the plot on the simu
 fig, ax = plt.subplots()
-ax.set_xlim(0, test(target, gravity))
+ax.set_xlim(0, getFallingDistance(target, gravity))
 ax.set_ylim(0, getMaxHeigth(target, gravity) + getMaxHeigth(target, gravity)/20)
 target, = ax.plot([], [], linestyle='-', marker='', label='Target')  # Connect points with lines
 shot, = ax.plot([], [], linestyle='-', marker='', label='Shot')
